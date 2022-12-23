@@ -1,11 +1,22 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
+import { removeUser } from '../redux/slice';
 
 const HomePage = () => {
-  return (
+  const dispatch = useDispatch();
+
+  const { isAuth, email } = useAuth();
+
+  return isAuth ? (
     <div>
-      <Navigate to="/login" />
+      <h1>Welcome</h1>
+
+      <button onClick={() => dispatch(removeUser())}>Log out from {email}</button>
     </div>
+  ) : (
+    <Navigate to="/login" />
   );
 };
 
